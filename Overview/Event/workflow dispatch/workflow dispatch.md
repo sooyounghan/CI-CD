@@ -23,7 +23,7 @@
 <img src="https://github.com/user-attachments/assets/81dc77dd-23c1-47c4-bd54-8caaf7be652e">
 </div>
 
-   - Choice 데이터 타입 : 미리 옵션으로 저장해둔 dev나 prod들 중 클릭해서 선택 가
+   - Choice 데이터 타입 : 미리 옵션으로 저장해둔 dev나 prod들 중 클릭해서 선택 가능
 <div align="center">
 <img src="https://github.com/user-attachments/assets/4c1d78c3-356d-41a8-98ce-6a4729999458">
 </div>
