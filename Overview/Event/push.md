@@ -20,6 +20,10 @@ jobs: # 실행시킬 jobs의 집합 (필수)
     steps: # 실행할 step 지정하는 step 집합
       - name: step1 # 실행시킬 step 이름 지정 (각 step 마다 명시적 지정 또는 생략 가능)
         run: echo hello world # 이 워크플로우는 push 이벤트 발생 시, 트리거가 되어 push job이라는 이름의 job 한 개가 실행되고, 이를 출력하고 종료
+      - name: step2
+        run: | # | : 멀티라인 커맨드
+          echo hello world
+          echo github action
 ```
 
    - Actions 확인
