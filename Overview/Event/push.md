@@ -3,7 +3,7 @@
 -----
 1. push
 <div align="center">
-<img src="https://github.com/user-attachments/assets/53eade64-07f7-41e9-9dd1-7fc4acfd2721">
+<img src="https://github.com/user-attachments/assets/fa1c86fa-cf18-4216-bd02-b8e12f5e0763">
 </div>
 
    - push 이벤트가 발생할 때 트리거가 되는 Github Action Workflow를 구성
