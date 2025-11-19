@@ -9,8 +9,8 @@
 </div>
 
 2. needs : Github Actions job 간에 종속성을 생성
-  - 하나의 job이 다른 job 또는 여러 job이 완료될 때 실행되도록 사용, 즉, 여러 job 실행 순서 조절
-  - 테스트 job이 실행되고, 그 job이 성공할 때, 배포 job이 실행되도록 구성
+   - 하나의 job이 다른 job 또는 여러 job이 완료될 때 실행되도록 사용, 즉, 여러 job 실행 순서 조절
+   - 테스트 job이 실행되고, 그 job이 성공할 때, 배포 job이 실행되도록 구성
 
 3. 실습
 ```yaml
@@ -47,7 +47,7 @@ jobs:
         run: echo "job4 done" 
 ```
 <div align="center">
-<img src="https://github.com/user-attachments/assets/229d6700-73ba-45dc-8654-c46dafa03c7">
+<img src="https://github.com/user-attachments/assets/0bd53cf5-44f1-4cba-8731-f411c48e1954">
 </div>
 
    - job4를 실행시킬 수 있는 방법 : Github Actions에서는 이런 상황을 위해서 종속성에 있는 job이 실패하더라도 실행할 수 있는 방법을 제공 (if condition)
