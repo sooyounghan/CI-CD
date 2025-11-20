@@ -21,7 +21,7 @@ jobs:
 <img src="https://github.com/user-attachments/assets/83081794-12f3-4c58-a9e4-eba71af72832">
 </div>
 
-   - branch filter를 dev-test로 변경하면, branch filtering을 dev-test로 설정하였으므로, dev branch에서는 실행되지 않
+   - branch filter를 dev-test로 변경하면, branch filtering을 dev-test로 설정하였으므로, dev branch에서는 실행되지 않음
 ```yaml
 name: branch-filter
 on:
