@@ -51,5 +51,5 @@ jobs:
           echo ${{ github.event_name }}
 ```
 <div align="center">
-<img src="https://github.com/user-attachments/assets/eb240583-ecf7-409f-a53a-81d18e1574f">
+<img src="https://github.com/user-attachments/assets/1d6cbb48-0627-4f74-8265-1624515859e3">
 </div>
