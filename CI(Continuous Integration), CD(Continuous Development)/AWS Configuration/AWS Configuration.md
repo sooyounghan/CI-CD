@@ -91,3 +91,12 @@ https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-depl
 <img width="976" height="389" alt="image" src="https://github.com/user-attachments/assets/c807560e-0808-4cda-b2e3-ec70f512e006" />
 <img width="959" height="315" alt="image" src="https://github.com/user-attachments/assets/2cb0c7f8-6295-4415-acb2-e69593768156" />
 </div>
+
+   - EKS 클러스터 생성 명령어 : ```eksctl create cluster -f create-cluster.yaml``` (Kubernetes Path 경로에서 실행)
+     + 클러스터 생성이 완료된 후 EKS를 확인하면 github-actions-cluster 클러스터 생성
+     + EC2를 확인하면, 노드로 2개의 인스턴스 생성 : 생성된 EC2에 컨테이너화 된 애플리케이션이 실행
+   - 참고 : IAM과 ECR(생성한 이미지 레포지토리에 많은 이미지를 계속 추가하지 않는 이상 거의 비용이 발생하지 않음)은 거의 비용이 발생하지 않고, CloudShell, EKS의 비용이 발생하므로, EKS 리소스를 삭제하는 것이 좋음
+
+   - EKS 클러스터 삭제 명령어 : ```eksctl delete cluster -f create-cluster.yaml``` (Kubernetes Path 경로에서 실행)
+     + EKS는 삭제 중인 상태되는 것 확인해야 
+     + EC2의 2개의 노드는 삭제되는 것 확인해야 함
