@@ -8,7 +8,7 @@
 
 3. CD(Continuous Delivery)
    - 코드 변경사항을 배포할 환경에 배포 준비 상태로 만드는 것 
-   - 즉, 변경 사항이 배포할 준비가 되어있더라도, 실제 배포는 수동으로 진행으로 이루어
+   - 즉, 변경 사항이 배포할 준비가 되어있더라도, 실제 배포는 수동으로 진행으로 이루어짐
 
 4. CD(Continuous Development)
    - 변경 사항이 자동으로, 실제 배포 환경에 자동으로 반영
@@ -25,6 +25,7 @@
    - 반영 완료 후, 기능 문제가 발생
 <div align="center">
 <img src="https://github.com/user-attachments/assets/21e8aedd-e8cb-4cda-aaab-133928ce61ad">
+</div>
 
    - CI / CD 도입
      + 개발자 A의 메세지 기능 코드가 GitHub에 반영되면, CI 프로세스 과정을 거치게 됨
@@ -75,7 +76,7 @@
 <img src="https://github.com/user-attachments/assets/6e924da9-d9d6-4e73-b467-90d692561af8">
 </div>
 
-   - 메세지 기능은 CD 프로세스를 진입해 CD 프로세스 처리 가
+   - 메세지 기능은 CD 프로세스를 진입해 CD 프로세스 처리 가능
 <div align="center">
 <img src="https://github.com/user-attachments/assets/33e4ef13-e50d-4ea1-973c-4d8f6abffb5e">
 </div>
