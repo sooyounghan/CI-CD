@@ -112,7 +112,6 @@ jobs:
 <img src="https://github.com/user-attachments/assets/d90da88c-7e29-43b9-9e8f-33611906f0ba">
 </div>
 
-<img width="931" height="529" alt="image" src="" />
 
    - Issue 생성 : 특정 키워드 사용하는 경우
 <div align="center">
