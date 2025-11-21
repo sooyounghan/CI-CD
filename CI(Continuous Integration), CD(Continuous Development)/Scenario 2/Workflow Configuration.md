@@ -1,0 +1,83 @@
+-----
+### 워크플로우 구성
+-----
+1. 트리거 구성
+   - github event : pull request
+   - path filter : my-app
+   - branch filter : dev, master
+
+2. job 구성
+   -개발 환경(dev)에 배포할 때 사용하는 job
+   - 운영 환경(production)에 배포할 때 사용하는 job
+   - 배포 환경마다 다른 job을 사용해야 하는가?
+     + dev
+       * image-build-dev
+       * deploy-dev
+
+     + prod
+       * image-build-prod
+       * deploy-prod
+<div align="center">
+<img src="https://github.com/user-attachments/assets/4ff827b7-8db7-4f9c-a631-654b93ba11a7">
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/49a09560-14dc-489a-a321-0ad4ace9d73f">
+</div>
+
+  - 위처럼 구성하면 배포할 환경마다 계속 job이 추가되는 구조 : 복잡성이 커지고 관리가 어려워짐
+
+  - 일반적으로 CI/CD를 구성할 때, 사용하는 job은 환경 변수나 secret을 제외하고 구성이 유사 (image-build-dev / image-build-prod, deploy-dev / deploy-prod 끼리 거의 유사)
+  - 따라서, 배포 환경마다 다른 환경 변수나 secret을 사용하도록 구성 : 단, 여러 개의 job이 아닌, 단일 job으로 구성
+  - 환경마다 다른 job을 사용하는 것이 아닌 environment를 이용해 각 환경마다 환경변수, secret 설정 및 사용
+    + 개발 / 운영 환경에 배포할 때 사용하는 job : image-build와 deploy
+    + environment 기능을 통해 job을 재사용
+      * environment: dev
+        * 환경 변수
+        * secret
+      * environment: prod
+        * 환경 변수
+        * secret
+<div align="center">
+<img src="https://github.com/user-attachments/assets/5d049e19-c482-4c36-bd04-24f72627beae">
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/dffd8452-0d44-4072-a479-7cd75ee59644">
+</div>
+
+   - 이러한 구성을 통해 output으로 환경을 받아온다면, 개발 환경 및 운영 환경 뿐만 아니라 환경이 더 늘어난다하더라도 단일 job을 재상요 가능
+     
+4. 최종 job 구성
+   - test
+   - set-environment
+     + 현재 배포 환경 판단
+       * dev Branch로 Merge 되면 개발 환경(dev)
+       * master Branch로 Merge 되면 운영 환경(prod)
+       * output 구성(set-env)
+   - image-build : 시나리오 1 코드와 거의 유사하나 set-environment의 output(set-env)를 받아올 수 있도록 업데이트
+   - deploy : 시나리오 1 코드와 거의 유사하나 set-environment의 output(set-env)를 받아올 수 있도록 업데이트
+     + set-environment의 output이 dev
+       * environment: dev
+       * image-build(dev), deploy(dev)
+     + set-environment의 output이 prod
+       * environment: prod
+       * image-build(prod), deploy(prod)
+   - create-pr : release Branch 생성
+     + checkout action 사용
+     + Github 권한 받아오기
+     + reelase / run-id Branch 생성
+     + release Branch에서 master Branch로 PR 생성 (gh cli 이용)
+     + 개발 환경 배포에 성공
+       * 그 시점의 release Branch 생성 : 개발 환경 배포에 성공한 Commit History
+       * release Branch - master Branch 사이 PR 생성
+       * 해당 PR을 Merge하면 운영 환경으로 배포
+
+5. 정리
+   - Add Branch Filter : master
+   - Update jjob
+     + image-build
+     + deploy
+   - Create job
+     + set-environment
+     + create-pr
