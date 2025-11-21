@@ -81,3 +81,48 @@
    - Create job
      + set-environment
      + create-pr
+
+6. 시나리오 2 미리보기
+   - CI (dev Branch)
+<div align="center">
+<img src="https://github.com/user-attachments/assets/c3de81b5-b0d8-46e4-aead-bacdf6881e20">
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/9b85795a-b6a2-4205-ae67-9dab9908f8ac">
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/42fe6076-b373-4f03-a1c3-424b7ee8e4b5">
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/2a6da729-75c4-4a77-b8c4-c0ffaf6ccdcc">
+</div>
+
+   - CD (dev Branch)
+<div align="center">
+<img src="https://github.com/user-attachments/assets/dd442fb0-0b3c-4d59-8410-7ce6812b9765">
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/930e51f8-44dc-4eff-80a4-bde1f8a9ad2f">
+</div>
+
+   - CI (master Branch)
+<div align="center">
+<img src="https://github.com/user-attachments/assets/45b21d29-039a-41ad-914f-90e6a3ef1979">
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/ab085c68-d73d-44dd-b407-610a21cdc3b2">
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/e9c995c4-2371-4538-a389-93117445cd48">
+</div>
+
+   - CD (master Branch)
+<div align="center">
+<img src="https://github.com/user-attachments/assets/9ce0c727-6824-430b-84ae-08d7d9438199">
+</div>
