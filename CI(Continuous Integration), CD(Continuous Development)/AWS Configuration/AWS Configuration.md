@@ -98,5 +98,5 @@ https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-depl
    - 참고 : IAM과 ECR(생성한 이미지 레포지토리에 많은 이미지를 계속 추가하지 않는 이상 거의 비용이 발생하지 않음)은 거의 비용이 발생하지 않고, CloudShell, EKS의 비용이 발생하므로, EKS 리소스를 삭제하는 것이 좋음
 
    - EKS 클러스터 삭제 명령어 : ```eksctl delete cluster -f create-cluster.yaml``` (Kubernetes Path 경로에서 실행)
-     + EKS는 삭제 중인 상태되는 것 확인해야 
+     + EKS는 삭제 중인 상태인 것 확인해야함
      + EC2의 2개의 노드는 삭제되는 것 확인해야 함
