@@ -3,7 +3,7 @@
 -----
 1. Kubernetes 환경 배포
 2. 시나리오 4개 : 간단한 시나리오에서 시작해서 요구사항 추가
-   - 각 시나리오의 Github Action Workflow 구성 : 단순한 구성 ~ 복잡한 구성을 통한 CI / CD 파이프라인 구
+   - 각 시나리오의 Github Action Workflow 구성 : 단순한 구성 ~ 복잡한 구성을 통한 CI / CD 파이프라인 구축
    - 시나리오 1 : 개발 환경에만 적용되는 CI / CD 파이프라인 구축
 <div align="center">
 <img src="https://github.com/user-attachments/assets/fc20dac0-a9c1-4225-8b3d-362bad514cf9">
@@ -34,7 +34,7 @@
 <img src="https://github.com/user-attachments/assets/18b6a222-5545-4336-88df-b9967982568c">
 </div>
 
-   - QA 환경에 배포하는 CD 프로세스 : 특정 태그를 푸시하면 이미지 빌드 작업을 거쳐 QA 환경에 배포한 후, Pull Request를 생성하는 흐
+   - QA 환경에 배포하는 CD 프로세스 : 특정 태그를 푸시하면 이미지 빌드 작업을 거쳐 QA 환경에 배포한 후, Pull Request를 생성하는 흐름
 <div align="center">
 <img src="https://github.com/user-attachments/assets/71a0048f-54aa-4643-870f-d4e993b695dc">
 </div>
