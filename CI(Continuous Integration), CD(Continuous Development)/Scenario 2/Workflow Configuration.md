@@ -46,7 +46,7 @@
 <img src="https://github.com/user-attachments/assets/dffd8452-0d44-4072-a479-7cd75ee59644">
 </div>
 
-   - 이러한 구성을 통해 output으로 환경을 받아온다면, 개발 환경 및 운영 환경 뿐만 아니라 환경이 더 늘어난다하더라도 단일 job을 재상요 가능
+   - 이러한 구성을 통해 output으로 환경을 받아온다면, 개발 환경 및 운영 환경 뿐만 아니라 환경이 더 늘어난다하더라도 단일 job을 재사용 가능
      
 4. 최종 job 구성
    - test
