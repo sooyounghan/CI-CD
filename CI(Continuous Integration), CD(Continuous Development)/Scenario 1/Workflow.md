@@ -100,19 +100,19 @@ jobs:
         run: |
           cd my-app
           npm run build
-        
+
   image-build:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions: # Action들이 수행할 수 있는 작업의 범위나 권한을 지정하는 역할(workflow-level, job-level에서도 지정 가능)
-      id-token: write 
+      id-token: write
       contents: read
     steps:
       - name: checkout the code
         uses: actions/checkout@v4
       - name: Configure AWS Credentials
         id: credentials
-        users: aws-actions/configure-aws-credential@v4 # image-build job에서 AWS에 접근하기 위해 AWS action 사용하기 위해(OIDC 설정 시, permission 설정 필요) job에서 permssion 설정
+        uses: aws-actions/configure-aws-credentials@v4 # image-build job에서 AWS에 접근하기 위해 AWS action 사용하기 위해(OIDC 설정 시, permission 설정 필요) job에서 permssion 설정
         with: # AWS에 액세스 하기 위한 정보 (Region 정보(환경변수)와 역할(Secret) 정보)
           aws-region: ${{ vars.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
@@ -120,14 +120,15 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          mask-password: 'true'
+          mask-password: "true"
       - name: docker build & push
-        run: | # ECR이 push하기 위한 REGISTRY는 민감한 정보이므로 secret으로 저장, REPOSITORY는 환경 변수로 지정 
-          docker build -f Dockerfile --tag ${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}:${{ github.sha }}
+        run:
+          | # ECR이 push하기 위한 REGISTRY는 민감한 정보이므로 secret으로 저장, REPOSITORY는 환경 변수로 지정
+          docker build -f Dockerfile --tag ${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}:${{ github.sha }} . 
           docker push ${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}:${{ github.sha }}
-        # Commit을 이미지 태그로 사용하면 해당 이미지가 어떤 코드 변경에 기반한 것인지 명확하게 알 수 있으므로, 버전 관리 용이 및 문제 원인 추적 및 롤백에 편리 (Commit을 이미지 태그로 사용하는 것이 일반적) 
+        # Commit을 이미지 태그로 사용하면 해당 이미지가 어떤 코드 변경에 기반한 것인지 명확하게 알 수 있으므로, 버전 관리 용이 및 문제 원인 추적 및 롤백에 편리 (Commit을 이미지 태그로 사용하는 것이 일반적)
 
-  deploy: # CD 
+  deploy: # CD
     runs-on: ubuntu-latest
     needs: [image-build]
     permissions: # AWS에 접근해야 하므로, permission 설정 필요
@@ -140,11 +141,11 @@ jobs:
         id: credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-regions: ${{ vars.AWS_REGION }}
+          aws-region: ${{ vars.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME}}
       - name: setup kubectl # Kubernetest 커맨드 사용
         uses: azure/setup-kubectl@v3
-        with: 
+        with:
           version: latest
       - name: setup helm # Helm 커맨드 사용
         uses: azure/setup-helm@v3
@@ -155,10 +156,11 @@ jobs:
           aws eks update-kubeconfig --name ${{ vars.CLUSTER_NAME }}
       - name: deploy # Helm 커맨드를 사용 : 접근한 쿠버네티스 클러스터에 배포
         id: status # id를 지정 : Slack Action 사용을 위함 (성공, 실패)
-        run: | # helm upgrade --install : 쿠버네티스 클러스터 내 my-app이라는 이름으로 애플리케이션 배포 (이미 존재하면 업그레이드, 아니면 새로 설치)
-          helm upgrade --install my-app kubernetes/my-app --create-namespace --namespace my-app-${{ vars.SUFFIX }} \ 
-          --set image.tag-${{ github.sha }} \
-          --set image.repository=${{ secrets.REGISTRY }}/${{ var.REPOSITORY }}
+        run:
+          | # helm upgrade --install : 쿠버네티스 클러스터 내 my-app이라는 이름으로 애플리케이션 배포 (이미 존재하면 업그레이드, 아니면 새로 설치)
+          helm upgrade --install my-app kubernetes/my-app --create-namespace --namespace my-app-${{ vars.SUFFIX }} \
+          --set image.tag=${{ github.sha }} \
+          --set image.repository=${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}
         # kubernetes/my-app : 해당 Helm 차트의 위치 (Helm 커맨드 사용을 위함이며, 쿠버네티스에 배포할 리소스들의 집합을 의미)
         # --create-namespace : 지정된 네임 스페이스가 존재하지 않으면 새로운 네임스페이스를 생성하도록 지시 (처음 배포할 때는 이 옵션을 통해 생성)
         # --namespace my-app-${{ vars.SUFFIX }} : 배포할 쿠버네티스 네임스페이스 지정 (실제 값은 dev)
@@ -173,12 +175,12 @@ jobs:
           payload: |
             {
               "text": "message",
-              "block": [
+              "blocks": [
                 {
                   "type": "section", 
                   "text": {
-                    "type": "mkrdwn"
-                    "text": "Environment : dev, Deploy Result : ${{ steps.status.outcome }}, Repository : ${{ github.repository }}"
+                    "type": "mrkdwn",
+                    "text": "Environment : dev, Deploy Result : ${{ steps.status.outcome }}, Repository : ${{ github.repository }}."
                   }
                 }
               ]
