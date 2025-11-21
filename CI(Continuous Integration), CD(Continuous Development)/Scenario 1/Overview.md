@@ -18,22 +18,3 @@
 <div align="center">
 <img src="https://github.com/user-attachments/assets/724f8380-d6dd-4aed-9186-2185cb40524b">
 </div>
-
-6. Workflow 구성
-   - 트리거 구성
-      + Github event : pull request (PR이 생성 및 동기화(CI), Merge(CD)될 경우에만 트리거)
-      + path filter : my-app (my-app이라는 디렉토리가 변경될 때만 트리거)
-      + branch filter : dev (개발 환경으로 사용하는 dev Branch에서만 트리거)
-   - job 구성
-      + test (CI)
-         * cache action 사용
-         * npm build
-      + image-build
-         * aws action
-         * aws ecr action
-         * docker
-      + deploy
-         * aws action
-         * kubectl action
-         * helm action
-         * slack action
