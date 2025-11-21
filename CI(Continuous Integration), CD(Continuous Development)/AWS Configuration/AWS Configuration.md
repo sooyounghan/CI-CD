@@ -2,17 +2,15 @@
 ### AWS 구성
 -----
 1. 각 시나리오마다 AWS 환경 구성은 동일
-2. 시나리오에 따라 달라지는 점
-   - ECR 레포지토리 생성
-
+2. 시나리오에 따라 달라지는 점 : ECR 레포지토리 생성
 3. 진행 과정
-   - Github OIDC 설정 : Github Actions에서 AWS에 접근할 수 있도록 임시 자격을 얻을 수 있
+   - Github OIDC 설정 : Github Actions에서 AWS에 접근할 수 있도록 임시 자격을 얻을 수 있음
    - AWS IAM Role 생성 : 접근할 수 있는 자격을 AWS IAM Role만으로, Github Actions에서 AWS로 접근 가능 
      + github actions
-     + cloud9 : 서비스에서 사용할 Role
+     + Cloud Shell : 서비스에서 사용할 Role
    - AWS ECR 생성 : image-build job에서 생성한 이미지를 관리하기 위해 이미지 레포지토리 생성
      + Region 선택 : 어떤 Region에서 클라우드 서비스를 사용할 지 선택
-     + AWS Cloud9 구성 : 환경 구성하기 위함으로, 웹 브라우저를 통해 접근 가능한 클라우드 기반 통합 개발 환경 (특정 장비나 OS에 구애받지 않고 작업 가능)
+     + AWS Cloud Shell 구성 : 환경 구성하기 위함으로, 웹 브라우저를 통해 접근 가능한 클라우드 기반 통합 개발 환경 (특정 장비나 OS에 구애받지 않고 작업 가능)
      + AWS EKS를 구성하기 위한 스크립트 실행 : AWS EKS 구성 완료
    - Github Repository에 환경 변수 및 Secret 구성
 
@@ -29,7 +27,7 @@ https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-depl
    - 대상 : ```sts.amazonaws.com``` 입력 후, 공급자 추가
 
 6. Github Actions에서 사용할 AWS IAM Role 설정
-   - AWS IAM 진입 후 역할 - 역할 생성 - 사용자 신뢰 정책 - 아래 JSON 입력 (내용 일부 수정) - 특정 Github Repository에서만 IAM role을 사용해 AWS에 접근할 수 있
+   - AWS IAM 진입 후 역할 - 역할 생성 - 사용자 신뢰 정책 - 아래 JSON 입력 (내용 일부 수정) - 특정 Github Repository에서만 IAM role을 사용해 AWS에 접근할 수 있음
 ```json
 {
     "Version": "2012-10-17",
