@@ -46,6 +46,10 @@
 <img src="https://github.com/user-attachments/assets/33d93fe1-f4d2-42b4-ac65-7a6b8a7229bc">
 </div>
 
+<div align="center">
+<img src="https://github.com/user-attachments/assets/6ba5d256-251b-4335-a054-f2c9884844bd">
+</div>
+
 3. Kubernetes는 Rolling-Update 전략을 사용해 애플리케이션을 업데이트
    - Kubernetes에 배포하는 애플리케이션을 Pod라고 하며, 이 전략을 사용하면 새로운 버전의 Pod를 생성하면서, 동시에 이전 버전의 Pod를 종료
    - 처음 배포를 진행했을 때, Revision은 1이었고, 두 번째 배포가 진행되어 이때는 Revision 2가 됨 (무중단 배포)
