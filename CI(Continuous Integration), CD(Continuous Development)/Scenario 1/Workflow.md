@@ -122,7 +122,7 @@ jobs:
         with:
           mask-password: 'true'
       - name: docker build & push
-        run: | # ECR이 push하기 위한 REGISTRY는 민감한 정보이므로 secret우로 저장, REPOSITORY는 환경 변수로 지정 
+        run: | # ECR이 push하기 위한 REGISTRY는 민감한 정보이므로 secret으로 저장, REPOSITORY는 환경 변수로 지정 
           docker build -f Dockerfile --tag ${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}:${{ github.sha }}
           docker push ${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}:${{ github.sha }}
         # Commit을 이미지 태그로 사용하면 해당 이미지가 어떤 코드 변경에 기반한 것인지 명확하게 알 수 있으므로, 버전 관리 용이 및 문제 원인 추적 및 롤백에 편리 (Commit을 이미지 태그로 사용하는 것이 일반적) 
