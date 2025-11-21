@@ -72,7 +72,7 @@
    - Slack Webhook 구성 : Slack API - Incoming Webhooks - Add New Webhook - 채널 검색에서 두 채널 허용
    - environment 구성 : 이름은 critical과 normal로 구성
       + environment 구성 완료 후, secret 구성 : 해당 environment에 접근 후 Environment secrets - Add Environment Secret 선택 (이름 : SLACK_WEBHOOK_URL)
-   - 외부에서 키워드 관리를 위한 keywordlist.txt 생성 후 normal, critical 키워드 추
+   - 외부에서 키워드 관리를 위한 keywordlist.txt 생성 후 normal, critical 키워드 추가
    - Github Actions Workflow 구성 (main branch)
 ```yaml
 name: issue-notify
