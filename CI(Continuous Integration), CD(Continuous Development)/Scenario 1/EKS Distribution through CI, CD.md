@@ -12,7 +12,7 @@
    - my-app/src/app.js 변경
    - dev Branch로 PR 생성 : 이 때, dev Branch로 PR이 생성되었으므로 CI 프로세스 실행
    - 해당 Pull Request를 Merge하면, 이미지를 빌드하는 작업을 진행하고, 그 작업이 완료되면 Kubernetes에 배포하는 작업 진행
-     + PR Merge 후, Actions 확인 및 CloudShell에서 kubectl get ns (현재 네임스페이스 조회) / kubectl get pods -n my-app-dev / kubectl get services -n my-app-dev : 아무것도 조회되지 않음
+     + PR Merge 후, Actions 확인 및 CloudShell에서 kubectl get ns (현재 네임스페이스 조회) / kubectl get pods -n my-app-dev / kubectl get services -n my-app-dev
      + deploy 처리가 완료되면 정상적 확인
 <div align="center">
 <img src="https://github.com/user-attachments/assets/3da3cc50-4c75-4969-86ce-0c501fa39df0">
