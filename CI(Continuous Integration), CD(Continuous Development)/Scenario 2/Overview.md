@@ -36,7 +36,7 @@
      + feature2 Branch에서의 작업을 개발 환경에 반영하기 위해 dev Branch로 PR을 Merge : dev-master Branch 간 PR이 동기화 되어 있어 이 PR에 반영
      + 이 때, 이 PR을 Merge하면, 결과적으로 master Branch에 의도하지 앟은 feature2의 작업이 반영
      + 이를 해결하기 위해 release-run-id Branch를 도입하여 dev와 master Branch 사이 간접적 PR을 생성하게 되면 동기화 문제를 피할 수 있음
-     + feature BRanch에서 dev Branch로 생성된 PR이 Merge되면, release-run-id라는 특별한 Branch가 만들어져 그 Branch에서 master Branch로 PR이 생성되고, feature2 Branch에서 dev Branch로 생성된 PR이 merge되면 또 다른 release-run-id를 사용하는 특별 Branch가 만들어져 각 작업이 분리되어 서로 영향을 주지 ㅇ낳음
+     + feature Branch에서 dev Branch로 생성된 PR이 Merge되면, release-run-id라는 특별한 Branch가 만들어져 그 Branch에서 master Branch로 PR이 생성되고, feature2 Branch에서 dev Branch로 생성된 PR이 merge되면 또 다른 release-run-id를 사용하는 특별 Branch가 만들어져 각 작업이 분리되어 서로 영향을 주지 않음
 <div align="center">
 <img src="https://github.com/user-attachments/assets/38b1915d-0a2d-4e52-9f47-a8a3f87f660f">
 </div>
