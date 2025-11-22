@@ -19,3 +19,5 @@
 6. create-pr 생성 완료 : release-master PR 생성
    - Open 되었으므로, test job 실행
    - master Branch에 Merge하면, prod 환경 배포로 진행
+
+7. 같은 방법으로 feature-cicd3-aws2 및 v6.0.0으로 재확인
