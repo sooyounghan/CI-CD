@@ -158,7 +158,7 @@ jobs:
         id: status # id를 지정 : Slack Action 사용을 위함 (성공, 실패)
         run:
           | # helm upgrade --install : 쿠버네티스 클러스터 내 my-app이라는 이름으로 애플리케이션 배포 (이미 존재하면 업그레이드, 아니면 새로 설치)
-          helm upgrade --install my-app kubernetes/my-app --create-namespace --namespace my-app-${{ vars.SUFFIX }} \
+          helm upgrade --install my-app kubernetes/my-app --create-namespace --namespace my-app-${{ matrix.environment }} \
           --set image.tag=${{ github.sha }} \
           --set image.repository=${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}
         # kubernetes/my-app : 해당 Helm 차트의 위치 (Helm 커맨드 사용을 위함이며, 쿠버네티스에 배포할 리소스들의 집합을 의미)
