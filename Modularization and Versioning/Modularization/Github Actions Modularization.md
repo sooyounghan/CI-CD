@@ -40,7 +40,7 @@
    - using : "compsite" 키워드 사용 (이 키워드가 있어야만 Composite 액션 사용 가능)
    - 이후, steps을 정의 (test job의 주요 로직 그대로 사용)
      + 앞서 설정한 input을 사용하기 위해 inputs.NODE_VERSION, intputs.WORKING_DIRECTORY 디렉토리로 정의
-     + 이렇게 구성한 다음, 모둘을 상요할 때 inputs 값을 넣어주게 되면, 그 값을 받아와서 그대로 실행
+     + 이렇게 구성한 다음, 모둘을 사용할 때 inputs 값을 넣어주게 되면, 그 값을 받아와서 그대로 실행
    - 💡 composite Action은 각 step에서 run 키워드를 사용한다면, shell: bash라는 값을 넣어줘야 제대로 실행
 <div align="center">
 <img src="https://github.com/user-attachments/assets/78fde49b-7e51-4b76-bcc9-373201c0bedd">
