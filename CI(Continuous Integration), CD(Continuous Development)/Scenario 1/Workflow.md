@@ -160,7 +160,7 @@ jobs:
           | # helm upgrade --install : 쿠버네티스 클러스터 내 my-app이라는 이름으로 애플리케이션 배포 (이미 존재하면 업그레이드, 아니면 새로 설치)
           helm upgrade --install my-app kubernetes/my-app --create-namespace --namespace my-app-${{ matrix.environment }} \
           --set image.tag=${{ github.sha }} \
-          --set image.repository=${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}
+          --set image.repository=${{ secrets.REGISTRY }}/my-app-${{ matrix.environment }}
         # kubernetes/my-app : 해당 Helm 차트의 위치 (Helm 커맨드 사용을 위함이며, 쿠버네티스에 배포할 리소스들의 집합을 의미)
         # --create-namespace : 지정된 네임 스페이스가 존재하지 않으면 새로운 네임스페이스를 생성하도록 지시 (처음 배포할 때는 이 옵션을 통해 생성)
         # --namespace my-app-${{ vars.SUFFIX }} : 배포할 쿠버네티스 네임스페이스 지정 (실제 값은 dev)
