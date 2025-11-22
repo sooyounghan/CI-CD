@@ -21,3 +21,9 @@
    - master Branch에 Merge하면, prod 환경 배포로 진행
 
 7. 같은 방법으로 feature-cicd3-aws2 및 v6.0.0으로 재확인
+8. v6.0.0 버전에서 v5.0.0 버전으로 Rollback
+   - Actions - Filter workflow runs - branch: 해당 Rollback을 원하는 버전 선택
+   - 해당 Workflow History 결과로 출력
+     + open : pull request open
+     + close : pull request close
+     + PR이 Merge되면, close되므로 해당 History 선택해서 deploy job을 재실행하면, v5.0.0 버전으로 Rollback
