@@ -128,9 +128,9 @@ jobs:
       - name: deploy
         id: status
         run: |
-          helm upgrade --install my-app kubernetes/my-app --create-namespace --namespace my-app-${{ vars.SUFFIX }} \
+          helm upgrade --install my-app kubernetes/my-app --create-namespace --namespace my-app-${{ matrix.environment }} \
           --set image.tag=${{ github.sha }} \
-          --set image.repository=${{ secrets.REGISTRY }}/${{ vars.REPOSITORY }}
+          --set image.repository=${{ secrets.REGISTRY }}/my-app-${{ matrix.environment }}
 
       - name: notify
         if: always()
