@@ -6,145 +6,145 @@
 ```yaml
 name: test
 authore: SooYoung
-description: 'Use test module in github action'
-inputs: 
+description: "Use test module in github action"
+inputs:
   NODE_VERSION:
-    description: 'set node version'
+    description: "set node version"
     requried: true
-    default: '18'
+    default: "18"
   WORKING_DIRECTORY:
-    description: 'set working directory'
+    description: "set working directory"
     requried: true
-    default: 'my-app'
+    default: "my-app"
 
   runs:
     using: "composite"
     steps:
-    - name: setup-node
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ inputs.NODE_VERSION }}
-    - name: Cache Node.js modules
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - name: Install dependencies
-      shell: bash
-      run: |
-        cd ${{ inputs.WORKING_DIRECTORY }}
-        npm ci
-    - name: npm build
-      shell: bash
-      run: |
-        cd ${{ inputs.WORKING_DIRECTORY }}
-        npm run build
+      - name: setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.NODE_VERSION }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        shell: bash
+        run: |
+          cd ${{ inputs.WORKING_DIRECTORY }}
+          npm ci
+      - name: npm build
+        shell: bash
+        run: |
+          cd ${{ inputs.WORKING_DIRECTORY }}
+          npm run build
 ```
 
 3. /common/set-environment/action.yaml (set-environment Module)
 ```yaml
-name: tset-environment
+name: set-environment
 authore: SooYoung
-description: 'Use set-environment module int github action
-inputs: 
+description: "Use set-environment module int github action"
+inputs:
   REF_TYPE:
-    description: 'branch or tag'
+    description: "branch or tag"
     required: true
-    default: 'branch'
+    default: "branch"
   BASE_REF:
-    description: 'dev or master'
+    description: "dev or master"
     required: true
-    default: 'dev'
+    default: "dev"
 
 outputs:
   environment:
-    description: 'set env'
+    description: "set env"
     value: ${{ steps.set-env.outputs.environment }}
 
 runs:
   using: "composite"
   stpes:
-  - name: set env
-    id: set-env
-    shell: bash
-    run: |
-      if [[ ${{ inputs.REF_TYPE }} == "tag" ]]; then
-        echo "environment=qa" >> $GITHUB_OUTPUT 
-        exit 0
-      fi
-
-      if [[ ${{ inputs.REF_TYPE }} == "branch" ]]; then
-        echo "environment=dev" >> $GITHUB_OUTPUT
-        if [[ ${{ inputs.BASE_REF }} == "master" ]]; then
-          echo "environment=staging" >> $GITHUB_OUTPUT 
+    - name: set env
+      id: set-env
+      shell: bash
+      run: |
+        if [[ ${{ inputs.REF_TYPE }} == "tag" ]]; then
+          echo "environment=qa" >> $GITHUB_OUTPUT 
+          exit 0
         fi
-      fi
 
-  - name: check env
-    shell: bash
-    run: echo ${{ steps.set-env.outputs.environment }}
+        if [[ ${{ inputs.REF_TYPE }} == "branch" ]]; then
+          echo "environment=dev" >> $GITHUB_OUTPUT
+          if [[ ${{ inputs.BASE_REF }} == "master" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT 
+          fi
+        fi
+
+    - name: check env
+      shell: bash
+      run: echo ${{ steps.set-env.outputs.environment }}
 ```
 
 4. /common/aws/action.yaml
 ```yaml
 name: aws
 authore: SooYoung
-description: 'Use aws module int github action
-inputs: 
+description: "Use aws module int github action"
+inputs:
   AWS_REGION:
-    description: 'set aws region'
+    description: "set aws region"
     required: true
-    default: 'ap-northeast-2'
+    default: "ap-northeast-2"
   AWS_ROLE_TO_ASSUME:
-    description: 'set aws role to assume'
+    description: "set aws role to assume"
     required: true
-    default: 'GithubActions'
+    default: "GithubActions"
 
 runs:
   using: "composite"
   steps:
-  - name: Configure AWS Credentials
-    id: credentials
-    uses: aws-actions/configure-aws-credentials@v4
-    with:
-      aws-region: ${{ inputs.AWS_REGION }}
-      role-to-assume: ${{ intputs.AWS_ROLE_TO_ASSUME }}
+    - name: Configure AWS Credentials
+      id: credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ inputs.AWS_REGION }}
+        role-to-assume: ${{ intputs.AWS_ROLE_TO_ASSUME }}
 ```
 
 5. /common/image-build/action.yaml
 ```yaml
 name: image build
 authore: SooYoung
-description: 'Use image build module in github action'
-inputs: 
+description: "Use image build module in github action"
+inputs:
   REPOSITORY:
-    description: 'set aws ecr repository'
+    description: "set aws ecr repository"
     required: true
-    default: 'my-app'
+    default: "my-app"
   REGISTRY:
-    description: 'set aws ecr registry'
+    description: "set aws ecr registry"
     required: true
-    default: ''
+    default: ""
   DOCKERFILE_PATH:
-    description: 'set dockerfile path'
+    description: "set dockerfile path"
     required: false
-    default: 'Dokcerfile'
+    default: "Dokcerfile"
 
 runs:
   using: "composite"
   steps:
-  - name: Login to Amazon ECR
-    id: login-ecr
-    uses: aws-actions/amazon-ecr-login@v2
-    with:
-      mask-password: "true"
-  - name: docker build & push
-    shell: bash
-    run: |
-      docker build -f ${{ inputs.DOCKERFILE_PATH }} --tag ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY }}:${{ github.sha }} .
-      docker push ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY }}:${{ github.sha }}
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+      with:
+        mask-password: "true"
+    - name: docker build & push
+      shell: bash
+      run: |
+        docker build -f ${{ inputs.DOCKERFILE_PATH }} --tag ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY }}:${{ github.sha }} .
+        docker push ${{ inputs.REGISTRY }}/${{ inputs.REPOSITORY }}:${{ github.sha }}
 ```
 
 6. /common/deploy/action.yaml
