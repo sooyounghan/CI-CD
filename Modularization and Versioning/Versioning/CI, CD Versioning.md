@@ -3,7 +3,7 @@
 -----
 1. cicd-6.yaml
 ```yaml
-name: cicd-5
+name: cicd-6
 on:
   push:
     paths:
@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: checkout the code
         uses: actions/checkout@v4
-      - name: check out module code
+      - name: checkout the module code
         uses: actions/checkout@v4
         with:
           repository: "sooyoung-action/github-actions-module"
@@ -41,7 +41,7 @@ jobs:
     outputs:
       environment: ${{ steps.set-env.outputs.environment }}
     steps:
-      - name: check the module code
+      - name: checkout the module code
         uses: actions/checkout@v4
         with:
           repository: "sooyoung-action/github-actions-module"
