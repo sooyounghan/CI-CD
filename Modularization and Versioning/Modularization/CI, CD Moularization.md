@@ -5,48 +5,47 @@
 2. /common/test/action.yaml (test module)
 ```yaml
 name: test
-authore: SooYoung
-description: "Use test module in github action"
+author: SooYoung
+description: "Use test job in github action"
 inputs:
   NODE_VERSION:
-    description: "set node version"
-    requried: true
+    description: "Set node version"
+    required: true
     default: "18"
   WORKING_DIRECTORY:
-    description: "set working directory"
-    requried: true
+    description: "Set work directory"
+    required: true
     default: "my-app"
 
-  runs:
-    using: "composite"
-    steps:
-      - name: setup-node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ inputs.NODE_VERSION }}
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Install dependencies
-        shell: bash
-        run: |
-          cd ${{ inputs.WORKING_DIRECTORY }}
-          npm ci
-      - name: npm build
-        shell: bash
-        run: |
-          cd ${{ inputs.WORKING_DIRECTORY }}
-          npm run build
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.NODE_VERSION }}
+    - name: Cache Node.js modules
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Install dependencies
+      shell: bash
+      run: |
+        cd ${{ inputs.WORKING_DIRECTORY }}
+        npm ci
+    - name: npm build
+      shell: bash
+      run: |
+        cd ${{ inputs.WORKING_DIRECTORY }}
+        npm run build
 ```
 
 3. /common/set-environment/action.yaml (set-environment Module)
 ```yaml
 name: set-environment
-authore: SooYoung
+author: SooYoung
 description: "Use set-environment module int github action"
 inputs:
   REF_TYPE:
@@ -57,50 +56,49 @@ inputs:
     description: "dev or master"
     required: true
     default: "dev"
-
 outputs:
   environment:
-    description: "set env"
+    description: "Get env"
     value: ${{ steps.set-env.outputs.environment }}
 
 runs:
   using: "composite"
-  stpes:
+  steps:
     - name: set env
       id: set-env
       shell: bash
       run: |
         if [[ ${{ inputs.REF_TYPE }} == "tag" ]]; then
-          echo "environment=qa" >> $GITHUB_OUTPUT 
-          exit 0
+            echo "environment=qa" >> $GITHUB_OUTPUT
+            exit 0
         fi
 
         if [[ ${{ inputs.REF_TYPE }} == "branch" ]]; then
-          echo "environment=dev" >> $GITHUB_OUTPUT
+            echo "environment=dev" >> $GITHUB_OUTPUT
           if [[ ${{ inputs.BASE_REF }} == "master" ]]; then
-            echo "environment=staging" >> $GITHUB_OUTPUT 
+            echo "environment=staging" >> $GITHUB_OUTPUT
           fi
         fi
-
-    - name: check env
+    - name: check output
       shell: bash
-      run: echo ${{ steps.set-env.outputs.environment }}
+      run: |
+        echo ${{ steps.set-env.outputs.environment }}
 ```
 
 4. /common/aws/action.yaml
 ```yaml
 name: aws
-authore: SooYoung
+author: SooYoung
 description: "Use aws module int github action"
 inputs:
   AWS_REGION:
-    description: "set aws region"
+    description: "Set AWS REGION"
     required: true
-    default: "ap-northeast-2"
+    default: "ap-northeast-1"
   AWS_ROLE_TO_ASSUME:
-    description: "set aws role to assume"
+    description: "Set AWS Assume Role arn"
     required: true
-    default: "GithubActions"
+    default: "arn:aws:iam::123456789:role/GithubActions"
 
 runs:
   using: "composite"
@@ -110,27 +108,27 @@ runs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{ inputs.AWS_REGION }}
-        role-to-assume: ${{ intputs.AWS_ROLE_TO_ASSUME }}
+        role-to-assume: ${{ inputs.AWS_ROLE_TO_ASSUME }}
 ```
 
 5. /common/image-build/action.yaml
 ```yaml
 name: image build
-authore: SooYoung
+author: SooYoung
 description: "Use image build module in github action"
 inputs:
   REPOSITORY:
-    description: "set aws ecr repository"
+    description: "Set aws ecr registry"
     required: true
-    default: "my-app"
+    default: ""
   REGISTRY:
-    description: "set aws ecr registry"
+    description: "Set aws ecr repository"
     required: true
     default: ""
   DOCKERFILE_PATH:
-    description: "set dockerfile path"
+    description: "Set aws ecr repository"
     required: false
-    default: "Dokcerfile"
+    default: "Dockerfile"
 
 runs:
   using: "composite"
@@ -150,112 +148,112 @@ runs:
 6. /common/deploy/action.yaml
 ```yaml
 name: deploy
-authore: SooYoung
+author: SooYoung
 description: "Use deploy module in github action"
 inputs:
   KUBECTL_VERSION:
-    description: "set kubectl version"
+    description: "Set kubectl version"
     required: false
-    default: "latest"
+    default: latest
   HELM_VERSION:
-    description: "set helm version"
+    description: "Set helm version"
     required: false
     default: v3.11.1
   CLUSTER_NAME:
-    description: "set cluster name"
+    description: "Set eks cluster name"
     required: true
     default: "github-actions"
   RELEASE_NAME:
-    description: "set release_name"
+    description: "Set release name"
     required: true
     default: "my-app"
   HELM_CHART_PATH:
-    description: "set helm chart path"
+    description: "Set helm chart path"
     required: true
-    default: "kubernetes/my-app"
+    default: "helm-chart"
   NAMESPACE:
-    description: "set namespace"
+    description: "Set eks namespace"
     required: true
     default: "my-app-dev"
   REPOSITORY:
-    description: "set ecr registry/repository"
+    description: "Set image repository"
     required: true
     default: ""
 
 runs:
   using: "composite"
   steps:
-  - name: setup kubectl
-    uses: azure/setup-kubectl@v3
-    with:
-      version: ${{ inputs.KUBECTL_VERSION }}
-  - name: setup helm
-    uses: azure/setup-helm@v3
-    with:
-      version: ${{ inputs.HELM_VERSION }}
-  - name: access Kubernetes
-    shell: bash
-    run: |
-      aws eks update-kubeconfig --name ${{ inputs.CLUSTER_NAME }}
-  - name: deploy
-    shell: bash
-    run: |
-      helm upgrade --install ${{ inputs.RELEASE_NAME }} ${{ inputs.HELM_CHART_PATH }} --create-namespace --namespace ${{ inputs.NAMESPACE }} \
-      --set image.tag=${{ github.sha }} \
-      --set image.repository=${{ inputs.REPOSITORY }}
+    - name: setup kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: ${{ inputs.KUBECTL_VERSION }}
+    - name: setup helm
+      uses: azure/setup-helm@v3
+      with:
+        version: ${{ inputs.HELM_VERSION }}
+    - name: access kubernetes
+      shell: bash
+      run: |
+        aws eks update-kubeconfig --name ${{ inputs.CLUSTER_NAME }}
+    - name: deploy
+      shell: bash
+      run: |
+        helm upgrade --install ${{ inputs.RELEASE_NAME }} ${{ inputs.HELM_CHART_PATH }} --create-namespace --namespace ${{ inputs.NAMESPACE }} \
+        --set image.tag=${{ github.sha }} \
+        --set image.repository=${{ inputs.REPOSITORY }}
 ```
 
 7. /common/slack/action.yaml
 ```yaml
 name: slack
-authore: SooYoung
+author: SooYoung
 description: "Use slack module in github action"
 inputs:
-  DEPLOY_STEP_STATUS:
-    description: "deploy step status"
+  REF_TYPE:
+    description: "branch or tag"
     required: true
-    default: "success"
-  ENVIRONMENT:
-    description: "set environment"
+    default: "branch"
+  BASE_REF:
+    description: "dev or master"
     required: true
-    default: 'dev'
-  SLACK_WEBHOOK_URL:
-    description: "set slack webhook url"
-    required: true
-    default: ''
+    default: "dev"
+outputs:
+  environment:
+    description: "Get env"
+    value: ${{ steps.set-env.outputs.environment }}
 
 runs:
   using: "composite"
   steps:
-  - name: notify
-    uses: slackapi/slack-github-action@v1.24.0
-    with:
-      payload: |
-        {
-          "text": "message",
-          "blocks": [
-            {
-              "type": "section",
-              "text": {
-                "type": "mrkdwn",
-                "text": "Environment : ${{ inputs.ENVIRONMENT }}, Deploy Result : ${{ inputs.DEPLOY_STEP_STATUS }}, Repository : ${{ github.repository }}."
-              }
-            }
-          ]
-        }
-    env:
-      SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
-      SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+    - name: set env
+      id: set-env
+      shell: bash
+      run: |
+        if [[ ${{ inputs.REF_TYPE }} == "tag" ]]; then
+            echo "environment=qa" >> $GITHUB_OUTPUT
+            exit 0
+        fi
+
+        if [[ ${{ inputs.REF_TYPE }} == "branch" ]]; then
+            echo "environment=dev" >> $GITHUB_OUTPUT
+          if [[ ${{ inputs.BASE_REF }} == "master" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+          fi
+        fi
+    - name: check output
+      shell: bash
+      run: |
+        echo ${{ steps.set-env.outputs.environment }}
 ```
 
 8. /common/create-pr/action.yaml
 ```yaml
 name: create-pr
-authore: SooYoung
+author: SooYoung
 description: "Use create-pr module in github action"
 inputs:
   PERSONAL_ACCESS_TOKEN:
-    description: "set personal access token"
+    description: "set pat"
     required: true
     default: ""
   HEAD:
@@ -266,20 +264,22 @@ inputs:
     description: "set base branch"
     required: true
     default: "master"
-
 runs:
   using: "composite"
   steps:
     - name: gh auth login
+      shell: bash
       run: |
         echo ${{ inputs.PERSONAL_ACCESS_TOKEN }} | gh auth login --with-token
     - name: create branch
+      shell: bash
       run: |
-        git checkout -b release/${{ inputs.HEAD }}
-        git push origin release/${{ inputs.head }}
-    - name: create pr
+        git checkout -b ${{ inputs.HEAD }}
+        git push origin ${{ inputs.HEAD }}
+    - name: Create Pull Request
+      shell: bash
       run: |
-        gh pr create --base ${{ inputs.BASE }} --head ${{ inputs.HEAD }} --title ${{ inputs.HEAD }} -> ${{ inptus.BASE }}" --body "release pr"
+        gh pr create --base ${{ inputs.BASE }} --head ${{ inputs.HEAD }} --title "${{ inputs.HEAD }} -> master" --body "release pr"
 ```
 
 9. Github github-actions-module에 Push
