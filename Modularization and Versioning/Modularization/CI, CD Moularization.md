@@ -209,41 +209,41 @@ name: slack
 author: SooYoung
 description: "Use slack module in github action"
 inputs:
-  REF_TYPE:
-    description: "branch or tag"
+  DEPLOY_STEP_STATUS:
+    description: "set deploy step status"
     required: true
-    default: "branch"
-  BASE_REF:
-    description: "dev or master"
+    default: "success"
+  ENVIRONMENT:
+    description: "set env"
     required: true
     default: "dev"
-outputs:
-  environment:
-    description: "Get env"
-    value: ${{ steps.set-env.outputs.environment }}
+  SLACK_WEBHOOK_URL:
+    description: "set slack webhook url"
+    required: true
+    default: ""
 
 runs:
   using: "composite"
   steps:
-    - name: set env
-      id: set-env
-      shell: bash
-      run: |
-        if [[ ${{ inputs.REF_TYPE }} == "tag" ]]; then
-            echo "environment=qa" >> $GITHUB_OUTPUT
-            exit 0
-        fi
-
-        if [[ ${{ inputs.REF_TYPE }} == "branch" ]]; then
-            echo "environment=dev" >> $GITHUB_OUTPUT
-          if [[ ${{ inputs.BASE_REF }} == "master" ]]; then
-            echo "environment=staging" >> $GITHUB_OUTPUT
-          fi
-        fi
-    - name: check output
-      shell: bash
-      run: |
-        echo ${{ steps.set-env.outputs.environment }}
+    - name: notify
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        payload: |
+          {
+            "text": "message",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "Environment : ${{ inputs.ENVIRONMENT }}, Deploy Result: ${{ inputs.DEPLOY_STEP_STATUS  }}, Repository: ${{ github.repository }}."
+                }
+              }
+            ]
+          }
+      env:
+        SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK_URL }}
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 ```
 
 8. /common/create-pr/action.yaml
