@@ -21,8 +21,9 @@
 <img src="https://github.com/user-attachments/assets/baf51909-bfdb-4882-aaa3-f885d574de39">
 </div>
 
-2. Github Actions Code의 문법적 오류 검사
-3. 온라인으로도 제공
+2. Github Actions Code의 문법적 오류 검사 : actionlint (오픈 소스)
+   - Github에 반영하기 전 Github Action에 문법에 오류가 있는지 코드 레벨에서 확인 가능
+   - 온라인으로도 제공
    - ```https://github.com/rhysd/actionlint```
    - ```https://rhysd.github.io/actionlint/```
 <div align="center">
