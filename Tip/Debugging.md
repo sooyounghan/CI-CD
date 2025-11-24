@@ -60,7 +60,7 @@ jobs:
 <img src="https://github.com/user-attachments/assets/1e5a061d-2f82-4208-9b22-ca6c37fd3752">
 </div>
 
-  - tmate 사용 : ssh Command를 이용해 Github Action Runner에 접근 가
+  - tmate 사용 : ssh Command를 이용해 Github Action Runner에 접근 가능
 <div align="center">
 <img src="https://github.com/user-attachments/assets/2bf9ecd9-9069-4445-9e62-775140465679">
 </div>
