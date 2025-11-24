@@ -20,4 +20,4 @@
 7. Versioning 방법
    - Module Repository v2.0.0 Branch 생성 후, Module 내 코드 수정 (v2.0.0)
    - Github-actions Repository - Settings - Actions - Variables - REF의 값을 v2.0.0로 설정, VERSION도 v2.0.0으로 지정
-   - 따라서, Organziation Level은 v1.0.0로 지정했지만, 특정 Repository는 v2.0.0로 진행되어 버저닝 가
+   - 따라서, Organziation Level은 v1.0.0로 지정했지만, 특정 Repository는 v2.0.0로 진행되어 버저닝 가능
