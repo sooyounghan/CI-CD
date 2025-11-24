@@ -23,9 +23,14 @@
 
 2. Github Actions Code의 문법적 오류 검사 : actionlint (오픈 소스)
    - Github에 반영하기 전 Github Action에 문법에 오류가 있는지 코드 레벨에서 확인 가능
-   - 온라인으로도 제공
-   - ```https://github.com/rhysd/actionlint```
-   - ```https://rhysd.github.io/actionlint/```
+   - ```https://github.com/rhysd/actionlint``` : actionlint Repository에 접근 해 바이너리 파일 다운
+   - 커맨드로 설치 가능 
+```
+go install github.com/rhysd/actionlint/cmd/actionlint@latest
+```
+   - 온라인으로도 제공 : ```https://rhysd.github.io/actionlint/```
 <div align="center">
 <img src="https://github.com/user-attachments/assets/45361969-67af-4b46-9a5f-11f56e5aa5c5">
 </div>
+
+ 
